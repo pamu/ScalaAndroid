@@ -11,6 +11,4 @@ class MainActivity extends Activity with TypedViewHolder {
     super.onCreate(bundle)
     setContentView(R.layout.activity_main)
   }
-
-
 }
