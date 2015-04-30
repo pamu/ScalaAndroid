@@ -42,15 +42,17 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
   override def getView(position: Int, convertView: View, parent: ViewGroup): View = {
     val viewType = getItemViewType(position)
     var mConvertView: View = convertView
+    val mHolder = new ViewHolder
     viewType match {
       case `textItem` => {
-        if (convertView == null) {
+        if (convertView == null || convertView.getTag.asInstanceOf[ViewHolder].textView == null) {
           val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
           val rootView: View = inflater.inflate(R.layout.list_view_item, null)
-          val holder = new ViewHolder
-          holder.textView = rootView.findViewById(TR.text_view.id).asInstanceOf[TextView]
-          holder.nameView = rootView.findViewById(TR.name_text_view.id).asInstanceOf[TextView]
-          rootView.setTag(holder)
+
+          mHolder.textView = rootView.findViewById(TR.text_view.id).asInstanceOf[TextView]
+          mHolder.nameView = rootView.findViewById(TR.name_text_view.id).asInstanceOf[TextView]
+          rootView.setTag(mHolder)
+
           mConvertView = rootView
         }
         val holder = mConvertView.getTag.asInstanceOf[ViewHolder]
@@ -59,9 +61,10 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
         mConvertView
       }
       case `imageItem` => {
-        if (convertView == null) {
+        if (convertView == null || convertView.getTag.asInstanceOf[ViewHolder].imageView == null) {
           val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
           val rootView: View = inflater.inflate(R.layout.list_view_image_item, null)
+
           val holder = new ViewHolder
           holder.imageView = rootView.findViewById(R.id.image_view).asInstanceOf[ImageView]
           rootView.setTag(holder)
@@ -69,8 +72,9 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
         }
         val holder = mConvertView.getTag.asInstanceOf[ViewHolder]
 
+
         //initial loading image
-        holder.imageView.setImageResource(R.mipmap.ic_launcher)
+        holder.imageView.setImageResource(R.drawable.android)
         val imageItem = list.get(position).asInstanceOf[ImageItem]
 
         implicit val exec = ExecutionContext.fromExecutor(
@@ -79,7 +83,7 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
         ImageUtils.getImage(new URL(imageItem.url)) onComplete {
           case Success(image) => holder.imageView.setImageBitmap(image)
           //load error image when failed
-          case Failure(t) => holder.imageView.setImageResource(R.mipmap.ic_launcher)
+          case Failure(t) => holder.imageView.setImageResource(R.drawable.android)
             Log.d("hello", "failed " + t.getMessage)
         }
 

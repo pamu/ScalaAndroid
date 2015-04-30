@@ -18,7 +18,7 @@ class MainActivity extends TypedActivity {
     setContentView(TR.layout.activity_main.id)
     val listView: ListView = findView[ListView](TR.list_view)
     val list = new ArrayList[Interactable]
-    //list.add(new TextItem(name = "Client", text = "I wanna buy cars !!! Anyone help me decide ... "))
+    list.add(new TextItem(name = "Client", text = "I wanna buy cars !!! Anyone help me decide ... "))
     val adapter = new CustomAdapter(getApplicationContext, list)
     listView.setAdapter(adapter)
     adapter.notifyDataSetChanged()
