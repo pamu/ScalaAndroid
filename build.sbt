@@ -13,6 +13,10 @@ version := "1.0.0"
 // Scala version
 scalaVersion := "2.11.4"
 
+javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
+
+scalacOptions ++= Seq("-feature", "-deprecation", "-target:jvm-1.7")
+
 // Repositories for dependencies
 resolvers ++= Seq(Resolver.mavenLocal,
   DefaultMavenRepository,
