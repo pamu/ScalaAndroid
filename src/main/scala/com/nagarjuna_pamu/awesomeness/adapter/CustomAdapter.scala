@@ -5,6 +5,7 @@ import java.net.URL
 import android.content.Context
 import android.graphics.{Bitmap, BitmapFactory}
 import android.os.AsyncTask
+import android.text.Html
 import android.util.Log
 import android.view.{LayoutInflater, ViewGroup, View}
 import android.webkit.WebView
@@ -22,7 +23,7 @@ import scala.util.{Failure, Success}
 class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) extends BaseAdapter {
   val textItem = 0
   val imageItem = 1
-  val webItem = 2
+  val htmlItem = 2
   val totalViewLayouts = 3
 
   override def getViewTypeCount: Int = totalViewLayouts
@@ -31,7 +32,7 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
     list.get(position) match {
       case item: TextItem => textItem
       case item: ImageItem => imageItem
-      case item: WebItem => webItem
+      case item: HtmlItem => htmlItem
     }
   }
 
@@ -43,10 +44,11 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
     val viewType = getItemViewType(position)
     var mConvertView: View = convertView
     val mHolder = new ViewHolder
+    val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+
     viewType match {
       case `textItem` => {
         if (convertView == null || convertView.getTag.asInstanceOf[ViewHolder].textView == null) {
-          val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
           val rootView: View = inflater.inflate(R.layout.list_view_item, null)
 
           mHolder.textView = rootView.findViewById(TR.text_view.id).asInstanceOf[TextView]
@@ -62,19 +64,17 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
       }
       case `imageItem` => {
         if (convertView == null || convertView.getTag.asInstanceOf[ViewHolder].imageView == null) {
-          val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
           val rootView: View = inflater.inflate(R.layout.list_view_image_item, null)
 
-          val holder = new ViewHolder
-          holder.imageView = rootView.findViewById(R.id.image_view).asInstanceOf[ImageView]
-          rootView.setTag(holder)
+          mHolder.imageView = rootView.findViewById(R.id.image_view).asInstanceOf[ImageView]
+          rootView.setTag(mHolder)
+
           mConvertView = rootView
         }
         val holder = mConvertView.getTag.asInstanceOf[ViewHolder]
 
-
         //initial loading image
-        holder.imageView.setImageResource(R.drawable.android)
+        holder.imageView.setImageResource(R.drawable.loading)
         val imageItem = list.get(position).asInstanceOf[ImageItem]
 
         implicit val exec = ExecutionContext.fromExecutor(
@@ -83,14 +83,26 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
         ImageUtils.getImage(new URL(imageItem.url)) onComplete {
           case Success(image) => holder.imageView.setImageBitmap(image)
           //load error image when failed
-          case Failure(t) => holder.imageView.setImageResource(R.drawable.android)
+          case Failure(t) => holder.imageView.setImageResource(R.drawable.loading)
             Log.d("hello", "failed " + t.getMessage)
         }
 
         mConvertView
       }
-      case `webItem` => {
-        null
+      case `htmlItem` => {
+        if (convertView == null || convertView.getTag.asInstanceOf[ViewHolder].htmlView == null) {
+          val rootView: View = inflater.inflate(R.layout.list_view_html_item, null)
+
+          mHolder.htmlView = rootView.findViewById(R.id.html_view).asInstanceOf[TextView]
+          rootView.setTag(mHolder)
+
+          mConvertView = rootView
+        }
+        val holder = mConvertView.getTag.asInstanceOf[ViewHolder]
+        val htmlItem: HtmlItem = list.get(position).asInstanceOf[HtmlItem]
+        holder.htmlView.setText(Html.fromHtml(htmlItem.html))
+
+        mConvertView
       }
     }
   }
@@ -104,7 +116,7 @@ class ViewHolder {
   var nameView: TextView = _
   var textView: TextView = _
   var imageView: ImageView = _
-  var webView: WebView = _
+  var htmlView: TextView = _
 }
 
 trait Interactable {
@@ -115,7 +127,7 @@ case class TextItem(name: String, text: String) extends Interactable
 
 case class ImageItem(name: String, url: String) extends Interactable
 
-case class WebItem(name: String, url: String) extends Interactable
+case class HtmlItem(name: String, html: String) extends Interactable
 
 object ImageUtils {
   def getImage(url: URL): Future[Bitmap] = {
