@@ -1,3 +1,5 @@
+import Libraries.android._
+
 // Using Android Plugin
 android.Plugin.androidBuild
 
@@ -26,6 +28,10 @@ resolvers ++= Seq(Resolver.mavenLocal,
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots"),
   Resolver.defaultLocal)
+
+libraryDependencies ++=Seq(
+  aar(androidAppCompat),
+  aar(androidCardView) )
 
 // Override the run task with the android:run
 run <<= run in Android
