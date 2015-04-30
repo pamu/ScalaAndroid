@@ -1,20 +1,27 @@
 package com.nagarjuna_pamu.awesomeness
 
+import java.util.ArrayList
+
 import android.app.Activity
 import android.os.Bundle
 import android.view.Menu
 import android.widget.{ArrayAdapter, ListView}
+import com.nagarjuna_pamu.awesomeness.adapter.{TextItem, Interactable, CustomAdapter}
 
 /**
  * Created by pnagarjuna on 29/04/15.
  */
-class MainActivity extends Activity with TypedViewHolder {
+class MainActivity extends TypedActivity {
   override def onCreate(bundle: Bundle): Unit = {
     super.onCreate(bundle)
-    setContentView(R.layout.activity_main)
-    val listView: ListView = findViewById(R.id.list_view).asInstanceOf[ListView]
+    setContentView(TR.layout.activity_main.id)
+    val listView: ListView = findView[ListView](TR.list_view)
+    val list = new ArrayList[Interactable]
+    list.add(new TextItem(name = "text item", text = "hey hello"))
+    list.add(new TextItem(name = "text item", text = "hey hello"))
+    list.add(new TextItem(name = "text item", text = "hey hello"))
 
-    listView.setAdapter(new ArrayAdapter[String](getApplicationContext, R.layout.list_view_item, R.id.text_view, Array("java", "scala")))
+    listView.setAdapter(new CustomAdapter(getApplicationContext, list))
   }
 
   override def onCreateOptionsMenu(menu: Menu): Boolean = {
