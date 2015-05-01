@@ -29,6 +29,28 @@ Project Name folder
 
 ![UI](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/architecture.png)
 
+## Future making GET reuqest to cloud (http://playscalaandroid.herokuapp.com)
+
+```scala
+    def getInfo(car: String): Future[String] = {
+            import Constants._
+            val future = Future {
+              val connection = Utils.query(car).openConnection().asInstanceOf[HttpURLConnection]
+              connection.setConnectTimeout(10000)
+              connection.setReadTimeout(10000)
+              connection.setRequestMethod("GET");
+              connection.setRequestProperty("Content-Type", "text/html");
+              connection.connect()
+              val scan = new Scanner(connection.getInputStream)
+              var result = ""
+              while (scan.hasNext) {
+                result += scan.next()
+              }
+              result
+            }
+            future
+          }
+```
 
 ## Working
 
