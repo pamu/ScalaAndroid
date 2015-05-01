@@ -21,6 +21,8 @@ Project Name folder
             | - test
   | - project
         | - plugins.sbt
+  
+  | - build.sbt (SBT configuration file)
 
 ```
 ## Architecture Diagram
