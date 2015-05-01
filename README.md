@@ -186,7 +186,12 @@ Project Name folder
       }
     }
 
-```
+````
+
+MainActivity.scala is an Android Activity component that inflates UI (ListView) and allows user to query the server
+using Chat like UI.
+
+![UI](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/ui.png)
 
 ## CustomAdapter.scala
 
