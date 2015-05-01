@@ -81,9 +81,13 @@ class CustomAdapter(val context: Context, val list: ArrayList[Interactable]) ext
           AsyncTask.THREAD_POOL_EXECUTOR)
 
         ImageUtils.getImage(new URL(imageItem.url)) onComplete {
-          case Success(image) => holder.imageView.setImageBitmap(image)
+          case Success(image) => holder.imageView.post(new Runnable {
+            override def run = holder.imageView.setImageBitmap(image)
+          })
           //load error image when failed
-          case Failure(t) => holder.imageView.setImageResource(R.drawable.loading)
+          case Failure(t) => holder.imageView.post(new Runnable {
+            override def run = holder.imageView.setImageResource(R.drawable.loading)
+          })
             Log.d("hello", "failed " + t.getMessage)
         }
 

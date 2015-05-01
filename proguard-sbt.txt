@@ -161,7 +161,9 @@
 # view res/layout/abc_action_menu_layout.xml #generated:17
 -keep class android.support.v7.widget.ActionMenuView { <init>(...); }
 
-# view res/layout/list_view_item.xml #generated:6
+# view res/layout/list_view_html_item.xml #generated:5
+# view res/layout/list_view_image_item.xml #generated:5
+# view res/layout/list_view_item.xml #generated:5
 -keep class android.support.v7.widget.CardView { <init>(...); }
 
 # view res/layout/abc_activity_chooser_view.xml #generated:19
@@ -173,10 +175,10 @@
 # view res/layout/abc_screen_toolbar.xml #generated:36
 -keep class android.support.v7.widget.Toolbar { <init>(...); }
 
-# view AndroidManifest.xml #generated:16
+# view AndroidManifest.xml #generated:18
 -keep class android.test.InstrumentationTestRunner { <init>(...); }
 
-# view AndroidManifest.xml #generated:7
+# view AndroidManifest.xml #generated:9
 -keep class com.nagarjuna_pamu.awesomeness.MainActivity { <init>(...); }
 
 -ignorewarnings

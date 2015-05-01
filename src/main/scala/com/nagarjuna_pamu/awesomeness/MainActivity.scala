@@ -1,12 +1,24 @@
 package com.nagarjuna_pamu.awesomeness
 
-import java.util.ArrayList
+import java.io.{InputStreamReader, BufferedReader}
+import java.net.HttpURLConnection
+import java.util.{Scanner, ArrayList}
 
-import android.content.Context
+import android.app.AlertDialog.Builder
+import android.app.{Activity, AlertDialog, ProgressDialog}
+import android.content.DialogInterface.OnClickListener
+import android.content.{DialogInterface, Context}
 import android.os.Bundle
+import android.util.Log
 import android.view.{View, Menu}
 import android.widget._
 import com.nagarjuna_pamu.awesomeness.adapter._
+import com.nagarjuna_pamu.awesomeness.constants.Constants
+import com.nagarjuna_pamu.awesomeness.utils.Utils
+import org.json.JSONObject
+
+import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 /**
  * Created by pnagarjuna on 29/04/15.
@@ -42,6 +54,47 @@ class MainActivity extends TypedActivity {
           adapter.notifyDataSetChanged()
           scrollToRecentItem(listView)
           editText.getText.clear()
+
+          val dialog = new ProgressDialog(MainActivity.this)
+          dialog.setIndeterminate(true)
+          dialog.setTitle("Busy")
+          dialog.setMessage("fetching info from cloud ...")
+          dialog.show()
+          import Constants._
+          getInfo(content) onComplete {
+            case Success(result) =>
+              Log.d("hello", result)
+              val json = new JSONObject(result.asInstanceOf[String])
+              val name = json.getString("name")
+              val url = json.getString("url")
+              if (name != "not_found") {
+                listView.post(new Runnable {
+                  override def run(): Unit = {
+                    dialog.dismiss()
+                    list.add(ImageItem(name, url))
+                    adapter.notifyDataSetChanged()
+                  }
+                })
+              } else {
+                listView.post(new Runnable {
+                  override def run(): Unit = {
+                    dialog.dismiss()
+                    list.add(new TextItem(name = "Server", text = "Not found in the inventory"))
+                    adapter.notifyDataSetChanged()
+                  }
+                })
+              }
+            case Failure(t) =>
+              listView.post(new Runnable {
+                override def run(): Unit = {
+                  alert(s"Failed due to ${t.getMessage}", MainActivity.this)
+                  dialog.dismiss()
+                }
+              })
+
+              Log.d("hello", t.getMessage)
+          }
+
         } else {
           Toast.makeText(context, "Send Clicked :)", Toast.LENGTH_SHORT).show
         }
@@ -60,5 +113,34 @@ class MainActivity extends TypedActivity {
     super.onCreateOptionsMenu(menu)
     getMenuInflater.inflate(R.menu.menu_main, menu)
     true
+  }
+
+  def getInfo(car: String): Future[String] = {
+    import Constants._
+    val future = Future {
+      val connection = Utils.query(car).openConnection().asInstanceOf[HttpURLConnection]
+      connection.setConnectTimeout(5000)
+      connection.setReadTimeout(5000)
+      connection.setRequestMethod("GET");
+      connection.setRequestProperty("Content-Type", "text/html");
+      connection.connect()
+      val scan = new Scanner(connection.getInputStream)
+      var result = ""
+      while (scan.hasNext) {
+        result += scan.next()
+      }
+      result
+    }
+    future
+  }
+
+  def alert(msg: String, activity: Activity) = {
+    val builder = new Builder(activity)
+    builder.setTitle("Message")
+    builder.setMessage(msg)
+    builder.setPositiveButton("Ok", new OnClickListener {
+      override def onClick(dialogInterface: DialogInterface, i: Int): Unit = dialogInterface.dismiss()
+    });
+    builder.create().show()
   }
 }
