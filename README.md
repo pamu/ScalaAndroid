@@ -27,6 +27,26 @@ Project Name folder
 
 ![UI](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/architecture.png)
 
+
+## Working
+
+
+![UI](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/ui.png)
+
+## user asking for swift
+
+![swift](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/swift.png)
+
+## fetching from internet
+
+![busy](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/busy.png)
+
+## Done fetching
+
+![done](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/done.png)
+
+# Code
+
 ## in package com.nagarjuna_pamu.awesomeness
 
 ```
@@ -193,20 +213,6 @@ Project Name folder
 
 MainActivity.scala is an Android Activity component that inflates UI (ListView) and allows user to query the server
 using Chat like UI.
-
-![UI](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/ui.png)
-
-## user asking for swift
-
-![swift](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/swift.png)
-
-## fetching from internet
-
-![busy](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/busy.png)
-
-## Done fetching
-
-![done](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/done.png)
 
 
 ## CustomAdapter.scala
