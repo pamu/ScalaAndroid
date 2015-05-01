@@ -197,6 +197,15 @@ using Chat like UI.
 
 ![swift](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/swift.png)
 
+## fetching from internet
+
+![busy](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/busy.png)
+
+## Done fetching
+
+![done](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/done.png)
+
+
 ## CustomAdapter.scala
 
 ```scala
