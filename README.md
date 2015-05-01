@@ -23,6 +23,9 @@ Project Name folder
         | - plugins.sbt
 
 ```
+## Architecture Diagram
+
+![UI](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/architecture.png)
 
 ## in package com.nagarjuna_pamu.awesomeness
 
