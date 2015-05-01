@@ -119,8 +119,8 @@ class MainActivity extends TypedActivity {
     import Constants._
     val future = Future {
       val connection = Utils.query(car).openConnection().asInstanceOf[HttpURLConnection]
-      connection.setConnectTimeout(5000)
-      connection.setReadTimeout(5000)
+      connection.setConnectTimeout(10000)
+      connection.setReadTimeout(10000)
       connection.setRequestMethod("GET");
       connection.setRequestProperty("Content-Type", "text/html");
       connection.connect()
