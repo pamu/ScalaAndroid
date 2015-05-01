@@ -193,6 +193,10 @@ using Chat like UI.
 
 ![UI](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/ui.png)
 
+## user asking for swift
+
+![swift](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/swift.png)
+
 ## CustomAdapter.scala
 
 ```scala
