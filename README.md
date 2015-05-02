@@ -45,7 +45,7 @@ Project Name folder
 
 ![UI](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/architecture.png)
 
-## Future making GET reuqest to cloud (http://playscalaandroid.herokuapp.com)
+## Future making GET request to cloud (http://playscalaandroid.herokuapp.com)
 
 ```scala
     def getInfo(car: String): Future[String] = {
