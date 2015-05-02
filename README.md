@@ -3,6 +3,21 @@ Android app development using Scala (Functional and Object oriented language on 
 
 This app uses http://playscalaandroid.herokuapp.com as a web service for fetching information.
 
+### To run this project
+
+```
+    git clone https://github.com/pamu/ScalaAndroid.git
+```
+
+go to project root directory and run
+
+```
+    sbt run
+```
+Download sbt and add it to the path in case you don't have it installed
+
+Note: Please ensure your android device is connected to the computer.
+
 ## Folder structure of Scala Android App
 
 ```
@@ -68,6 +83,12 @@ Project Name folder
 ## Done fetching
 
 ![done](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/done.png)
+
+## nano
+
+![nano](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/nano.png)
+
+![nano_done](https://raw.githubusercontent.com/pamu/ScalaAndroid/master/images/nano_done.png)
 
 # Code
 
