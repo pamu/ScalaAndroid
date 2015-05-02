@@ -67,6 +67,15 @@ Project Name folder
           }
 ```
 
+## possible queries
+
+```
+    maruti
+    nano
+    bmw
+    swift
+    tesla
+```
 ## Working
 
 
