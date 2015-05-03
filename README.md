@@ -68,6 +68,27 @@ Project Name folder
           }
 ```
 
+### Interesting code snippets
+```scala
+implicit val exec = ExecutionContext.fromExecutor(
+          AsyncTask.THREAD_POOL_EXECUTOR)
+```
+Use above as the thread pool when you use futures in the scala android
+
+### View Holder a super fast way to load items on List View
+```
+ class ViewHolder {
+      var nameView: TextView = _
+      var textView: TextView = _
+      var imageView: ImageView = _
+      var htmlView: TextView = _
+    }
+```
+
+cache the views using view holder class and change the content every time user requests a new list view item.
+          
+         
+
 ## possible queries
 
 ```
